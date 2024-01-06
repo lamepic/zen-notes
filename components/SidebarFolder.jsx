@@ -1,6 +1,6 @@
 "use client";
 import {
-  ChevronDown,
+  ChevronRight,
   Folder,
   FolderClosed,
   MoreVertical,
@@ -44,11 +44,11 @@ function SidebarFolder() {
                 <p className="">Delete</p>
               </IconButton>
             </FolderMenu>
-            <ChevronDown
+            <ChevronRight
               onClick={() => setOpenFolder(!openFolder)}
               className={cn(
-                "transition-all duration-200 ease-linear",
-                !openFolder ? "rotate-180" : "-rotate-80"
+                "transition-all duration-100 ease-linear",
+                !openFolder ? "-rotate-90" : ""
               )}
             />
           </div>
