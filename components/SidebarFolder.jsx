@@ -29,7 +29,7 @@ function SidebarFolder() {
             onClick={() => setOpenFolder(!openFolder)}
           >
             {!openFolder ? <FolderClosed size={20} /> : <Folder size={20} />}
-            <p className="">Folder Name</p>
+            <p className="lg:text-sm">Folder Name</p>
           </button>
           <div className="flex items-center">
             <FolderMenu>

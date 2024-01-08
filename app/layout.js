@@ -1,5 +1,6 @@
 import { Quicksand } from "next/font/google";
 import "./globals.css";
+import "draft-js/dist/Draft.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <meta charSet="utf-8" />
       <body className={cn("overflow-hidden", quickSand.className)}>
         <ThemeProvider
           attribute="class"
