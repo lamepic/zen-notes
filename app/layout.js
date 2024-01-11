@@ -3,6 +3,7 @@ import "./globals.css";
 import "draft-js/dist/Draft.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
+import { AuthProvider } from "@/lib/auth";
 
 const quickSand = Quicksand({
   subsets: ["latin"],
@@ -20,14 +21,16 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <meta charSet="utf-8" />
       <body className={cn("overflow-hidden", quickSand.className)}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
