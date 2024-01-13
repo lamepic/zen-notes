@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -10,7 +11,9 @@ export default function Home() {
           A minimal note taking app
         </h1>
         <p className="text-xl lg:text-2xl">Take note minus the distractions</p>
-        <Button className="p-7 w-44 text-lg">Get Started</Button>
+        <Button className="p-7 w-44 text-lg">
+          <Link href="/login">Get Started</Link>
+        </Button>
       </div>
     </main>
   );
