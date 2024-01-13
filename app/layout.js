@@ -3,7 +3,7 @@ import "./globals.css";
 import "draft-js/dist/Draft.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { cn } from "@/lib/utils";
-import { AuthProvider } from "@/lib/auth";
+import { AuthProvider, useAuth } from "@/lib/auth";
 
 const quickSand = Quicksand({
   subsets: ["latin"],

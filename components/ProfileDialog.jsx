@@ -21,14 +21,14 @@ function ProfileDialog({ children }) {
           <DialogTitle className="text-3xl text-center">Profile</DialogTitle>
           <DialogDescription className="flex flex-col items-center py-5 space-y-2 font-bold">
             <Avatar className="flex items-center justify-center">
-              <AvatarImage src={user.avatar} alt="profile-img" />
+              <AvatarImage src={user?.avatar} alt="profile-img" />
               <AvatarFallback className="border shadow-sm">
                 {user?.name.split(" ")[0][0]}
                 {user?.name.split(" ")[1][0]}
               </AvatarFallback>
             </Avatar>
-            <p className="text-xl">{user.name}</p>
-            <p>{user.email}</p>
+            <p className="text-xl">{user?.name}</p>
+            <p>{user?.email}</p>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
