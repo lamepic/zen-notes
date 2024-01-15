@@ -8,8 +8,12 @@ import {
   RichUtils,
   convertFromRaw,
 } from "draft-js";
-import { AlignJustify, Trash } from "lucide-react";
+import { AlignJustify, Save, Trash } from "lucide-react";
 import EditorToolbar from "./EditorToolbar";
+import { useNotes } from "@/lib/NotesProvider";
+import NoteEditorMenuBar from "./NoteEditorMenuBar";
+import { useSWRConfig } from "swr";
+import { saveNote } from "@/lib/services";
 
 const emptyContentState = convertFromRaw({
   entityMap: {},
@@ -32,36 +36,46 @@ const blockRendererFn = function (contentBlock) {
 };
 
 function NoteEditor({ setShowSidebar }) {
+  const { note } = useNotes();
+  const [content, setContent] = useState("");
+  const [name, setName] = useState("");
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(emptyContentState)
   );
+  const { mutate } = useSWRConfig();
 
   useEffect(() => {
+    setName(note?.name ?? "Untitled");
     setEditorState(
-      EditorState.createWithContent(ContentState.createFromText(""))
+      EditorState.createWithContent(
+        ContentState.createFromText(note?.content ?? "")
+      )
     );
-  }, []);
-
-  const onChange = (e) => {
-    // console.log(e);
-  };
+  }, [note]);
 
   const toggleStyle = (type) => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, type));
   };
 
+  const handleSaveNote = async () => {
+    const newNote = {
+      ...note,
+      name,
+      content,
+      folderId: note.folderId,
+    };
+
+    await saveNote(newNote, note.id);
+    mutate(`notes-${note.folderId}`);
+  };
+
   return (
     <>
-      <div className="border-b p-5 lg:border-0 dark:border-gray-500 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <AlignJustify
-            onClick={() => setShowSidebar(true)}
-            className="lg:hidden"
-          />
-          <p className="font-semibold text-lg">Note Title</p>
-        </div>
-        <Trash size={20} className="cursor-pointer" />
-      </div>
+      <NoteEditorMenuBar
+        name={name}
+        setName={setName}
+        handleSaveNote={handleSaveNote}
+      />
       <EditorToolbar onEditorChange={toggleStyle} />
       <div className="px-5 mt-1">
         <Editor
@@ -69,7 +83,7 @@ function NoteEditor({ setShowSidebar }) {
           editorState={editorState}
           onChange={(editorState) => {
             setEditorState(editorState);
-            onChange(editorState.getCurrentContent().getPlainText());
+            setContent(editorState.getCurrentContent().getPlainText());
           }}
           userSelect="none"
           contentEditable={true}

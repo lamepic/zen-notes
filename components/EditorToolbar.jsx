@@ -41,12 +41,12 @@ function EditorToolbar({ onEditorChange }) {
     onEditorChange(type);
   };
   return (
-    <div className="flex items-center justify-center space-x-3 border p-2 bg-gray-400/10">
-      {tools.map((item) => (
+    <div className="flex items-center justify-center space-x-3 border p-2 bg-gray-400/10 h-5">
+      {/* {tools.map((item) => (
         <ToolbarIcon onClick={() => handleClick(item.type)} key={item.type}>
           {item.icon}
         </ToolbarIcon>
-      ))}
+      ))} */}
     </div>
   );
 }
