@@ -12,13 +12,22 @@ import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { useState } from "react";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
+import { deleteFolder } from "@/lib/services";
+import { useSWRConfig } from "swr";
 
 function SidebarFolder({ folder }) {
   const [editMode, setEditMode] = useState(false);
   const [openFolder, setOpenFolder] = useState(false);
+  const { mutate } = useSWRConfig();
 
   const handleSave = () => {
     setEditMode(false);
+  };
+
+  const handleDelete = async () => {
+    console.log("deleting...");
+    await deleteFolder(folder);
+    mutate("getFolders");
   };
 
   return (
@@ -40,7 +49,10 @@ function SidebarFolder({ folder }) {
                   Edit
                 </p>
               </IconButton>
-              <IconButton className="flex items-center space-x-3">
+              <IconButton
+                className="flex items-center space-x-3"
+                onClick={handleDelete}
+              >
                 <Trash2 className="text-red-500" size={20} />
                 <p className="">Delete</p>
               </IconButton>
