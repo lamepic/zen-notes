@@ -13,13 +13,14 @@ import { useState } from "react";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
 
-function SidebarFolder() {
+function SidebarFolder({ folder }) {
   const [editMode, setEditMode] = useState(false);
   const [openFolder, setOpenFolder] = useState(false);
 
   const handleSave = () => {
     setEditMode(false);
   };
+
   return (
     <>
       {!editMode ? (
@@ -28,8 +29,8 @@ function SidebarFolder() {
             className="flex items-center gap-2"
             onClick={() => setOpenFolder(!openFolder)}
           >
-            {!openFolder ? <FolderClosed size={20} /> : <Folder size={20} />}
-            <p className="lg:text-sm">Folder Name</p>
+            {!openFolder ? <Folder size={20} /> : <FolderClosed size={20} />}
+            <p className="lg:text-sm">{folder.name}</p>
           </button>
           <div className="flex items-center">
             <FolderMenu>
@@ -48,7 +49,7 @@ function SidebarFolder() {
               onClick={() => setOpenFolder(!openFolder)}
               className={cn(
                 "transition-all duration-100 ease-linear",
-                !openFolder ? "-rotate-90" : ""
+                openFolder ? "-rotate-90" : ""
               )}
             />
           </div>
