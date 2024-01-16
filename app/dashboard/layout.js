@@ -2,6 +2,7 @@
 import { useAuth } from "@/lib/auth";
 import React from "react";
 import { NotesProvider } from "@/lib/NotesProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 function Layout({ children }) {
   const { loading, user } = useAuth();
@@ -11,7 +12,10 @@ function Layout({ children }) {
       {loading && !user ? (
         <p className="text-2xl">Loading...</p>
       ) : (
-        <NotesProvider>{children}</NotesProvider>
+        <NotesProvider>
+          {children}
+          <Toaster />
+        </NotesProvider>
       )}
     </div>
   );

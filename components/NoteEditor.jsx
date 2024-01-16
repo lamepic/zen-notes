@@ -8,12 +8,12 @@ import {
   RichUtils,
   convertFromRaw,
 } from "draft-js";
-import { AlignJustify, Save, Trash } from "lucide-react";
 import EditorToolbar from "./EditorToolbar";
 import { useNotes } from "@/lib/NotesProvider";
 import NoteEditorMenuBar from "./NoteEditorMenuBar";
 import { useSWRConfig } from "swr";
 import { saveNote } from "@/lib/services";
+import { useToast } from "@/components/ui/use-toast";
 
 const emptyContentState = convertFromRaw({
   entityMap: {},
@@ -36,22 +36,25 @@ const blockRendererFn = function (contentBlock) {
 };
 
 function NoteEditor({ setShowSidebar }) {
-  const { note } = useNotes();
+  const { selectedFolderId, data, setSelectedNote, isLoading } = useNotes();
   const [content, setContent] = useState("");
   const [name, setName] = useState("");
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(emptyContentState)
   );
   const { mutate } = useSWRConfig();
+  const { toast } = useToast();
 
   useEffect(() => {
-    setName(note?.name ?? "Untitled");
-    setEditorState(
-      EditorState.createWithContent(
-        ContentState.createFromText(note?.content ?? "")
-      )
-    );
-  }, [note]);
+    if (!isLoading) {
+      setName(data?.name ?? "New Note");
+      setEditorState(
+        EditorState.createWithContent(
+          ContentState.createFromText(data?.content ?? "")
+        )
+      );
+    }
+  }, [data, isLoading]);
 
   const toggleStyle = (type) => {
     setEditorState(RichUtils.toggleInlineStyle(editorState, type));
@@ -59,14 +62,27 @@ function NoteEditor({ setShowSidebar }) {
 
   const handleSaveNote = async () => {
     const newNote = {
-      ...note,
+      ...data,
       name,
       content,
-      folderId: note.folderId,
+      folderId: selectedFolderId,
     };
 
-    await saveNote(newNote, note.id);
-    mutate(`notes-${note.folderId}`);
+    await saveNote(newNote, data?.id);
+    mutate(`notes-${selectedFolderId}`);
+    setSelectedNote(newNote);
+
+    if (data?.id) {
+      toast({
+        title: "Note Update",
+        description: `${newNote.name} has been updated`,
+      });
+    } else {
+      toast({
+        title: "Note Created",
+        description: `${newNote.name} has been created`,
+      });
+    }
   };
 
   return (
@@ -75,6 +91,7 @@ function NoteEditor({ setShowSidebar }) {
         name={name}
         setName={setName}
         handleSaveNote={handleSaveNote}
+        setShowSidebar={setShowSidebar}
       />
       <EditorToolbar onEditorChange={toggleStyle} />
       <div className="px-5 mt-1">

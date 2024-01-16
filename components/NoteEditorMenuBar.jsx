@@ -1,15 +1,15 @@
 import { AlignJustify, Save, Trash } from "lucide-react";
 
-function NoteEditorMenuBar({ name, setName, handleSaveNote }) {
+function NoteEditorMenuBar({ name, setName, handleSaveNote, setShowSidebar }) {
   return (
     <div className="border-b p-5 lg:border-0 dark:border-gray-500 flex items-center justify-between">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 w-full">
         <AlignJustify
           onClick={() => setShowSidebar(true)}
           className="lg:hidden"
         />
         <input
-          className="font-semibold text-lg bg-transparent outline-none"
+          className="font-semibold text-lg bg-transparent outline-none w-9/12 text-wrap"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />

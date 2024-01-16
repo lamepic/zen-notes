@@ -7,7 +7,7 @@ import Link from "next/link";
 function Navbar() {
   return (
     <nav className="flex justify-between p-5 lg:px-8 items-center">
-      <Logo />
+      <Logo link={true} />
       <div className="flex items-center gap-2">
         <Button
           variant="outline"

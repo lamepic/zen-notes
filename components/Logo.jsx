@@ -8,11 +8,11 @@ const bangers = Chewy({
   weight: "400",
 });
 
-function Logo() {
+function Logo({ link }) {
   return (
     <h1>
       <Link
-        href="/"
+        href={link ? "/" : ""}
         className={cn("text-2xl lg:text-3xl font-bold", bangers.className)}
       >
         Zen Notes

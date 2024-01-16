@@ -3,7 +3,7 @@ import React from "react";
 import { useSWRConfig } from "swr";
 
 function SidebarFile({ note }) {
-  const { setSelectedNote } = useNotes();
+  const { setSelectedNote, setSelectedFolderId } = useNotes();
   const { mutate } = useSWRConfig();
 
   return (
@@ -12,6 +12,7 @@ function SidebarFile({ note }) {
         className="w-full text-left"
         onClick={() => {
           setSelectedNote(note);
+          setSelectedFolderId(note.folderId);
           mutate(`note-${note.id}`);
         }}
       >

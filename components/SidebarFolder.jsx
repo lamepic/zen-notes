@@ -15,12 +15,14 @@ import { cn } from "@/lib/utils";
 import { deleteFolder, getNotes, updateFolder } from "@/lib/services";
 import useSWR, { useSWRConfig } from "swr";
 import FileList from "./FileList";
+import { useNotes } from "@/lib/NotesProvider";
 
 function SidebarFolder({ folder }) {
   const [editMode, setEditMode] = useState(false);
   const [openFolder, setOpenFolder] = useState(false);
   const [folderName, setFolderName] = useState(folder.name);
   const { mutate } = useSWRConfig();
+  const { setSelectedNote, setSelectedFolderId } = useNotes();
   const { data, isLoading } = useSWR(folder ? `notes-${folder.id}` : null, () =>
     getNotes(folder)
   );
@@ -48,7 +50,9 @@ function SidebarFolder({ folder }) {
           <div className="flex justify-between items-center px-3 py-1 cursor-pointer hover:bg-[#e5e5e5] dark:hover:bg-slate-900/70 duration-150 mb-1 transition-all">
             <button
               className="flex items-center gap-2 w-full py-2"
-              onClick={() => setOpenFolder(!openFolder)}
+              onClick={() => {
+                setOpenFolder(!openFolder);
+              }}
             >
               {!openFolder ? <Folder size={20} /> : <FolderClosed size={20} />}
               <p className="lg:text-sm">{folder.name}</p>
@@ -70,7 +74,9 @@ function SidebarFolder({ folder }) {
                 </IconButton>
               </FolderMenu>
               <ChevronRight
-                onClick={() => setOpenFolder(!openFolder)}
+                onClick={() => {
+                  setOpenFolder(!openFolder);
+                }}
                 className={cn(
                   "transition-all duration-100 ease-linear",
                   openFolder ? "-rotate-90" : ""
@@ -80,7 +86,13 @@ function SidebarFolder({ folder }) {
           </div>
           {openFolder && (
             <div className="-mt-1">
-              <button className="text-gray-500 text-left text-sm w-full pl-10">
+              <button
+                className="text-gray-500 text-left text-sm w-full pl-10"
+                onClick={() => {
+                  setSelectedNote(null);
+                  setSelectedFolderId(folder.id);
+                }}
+              >
                 Add note...
               </button>
               {!isLoading && <FileList notes={data} />}
