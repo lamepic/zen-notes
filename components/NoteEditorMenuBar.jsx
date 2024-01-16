@@ -1,6 +1,12 @@
 import { AlignJustify, Save, Trash } from "lucide-react";
 
-function NoteEditorMenuBar({ name, setName, handleSaveNote, setShowSidebar }) {
+function NoteEditorMenuBar({
+  name,
+  setName,
+  handleSaveNote,
+  setShowSidebar,
+  handleDeleteNote,
+}) {
   return (
     <div className="border-b p-5 lg:border-0 dark:border-gray-500 flex items-center justify-between">
       <div className="flex items-center gap-3 w-full">
@@ -20,7 +26,11 @@ function NoteEditorMenuBar({ name, setName, handleSaveNote, setShowSidebar }) {
           size={20}
           className="cursor-pointer text-green-500"
         />
-        <Trash size={20} className="cursor-pointer text-red-500" />
+        <Trash
+          onClick={handleDeleteNote}
+          size={20}
+          className="cursor-pointer text-red-500"
+        />
       </div>
     </div>
   );

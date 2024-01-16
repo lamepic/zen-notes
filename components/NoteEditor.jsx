@@ -12,7 +12,7 @@ import EditorToolbar from "./EditorToolbar";
 import { useNotes } from "@/lib/NotesProvider";
 import NoteEditorMenuBar from "./NoteEditorMenuBar";
 import { useSWRConfig } from "swr";
-import { saveNote } from "@/lib/services";
+import { deleteNote, saveNote } from "@/lib/services";
 import { useToast } from "@/components/ui/use-toast";
 
 const emptyContentState = convertFromRaw({
@@ -36,7 +36,8 @@ const blockRendererFn = function (contentBlock) {
 };
 
 function NoteEditor({ setShowSidebar }) {
-  const { selectedFolderId, data, setSelectedNote, isLoading } = useNotes();
+  const { selectedFolderId, data, setSelectedNote, isLoading, selectedNote } =
+    useNotes();
   const [content, setContent] = useState("");
   const [name, setName] = useState("");
   const [editorState, setEditorState] = useState(
@@ -85,6 +86,16 @@ function NoteEditor({ setShowSidebar }) {
     }
   };
 
+  const handleDeleteNote = async () => {
+    await deleteNote(selectedNote);
+    mutate(`notes-${selectedFolderId}`);
+    toast({
+      title: "Note Deleted",
+      variant: "destructive",
+      description: `${selectedNote.name} has been deleted`,
+    });
+  };
+
   return (
     <>
       <NoteEditorMenuBar
@@ -92,6 +103,7 @@ function NoteEditor({ setShowSidebar }) {
         setName={setName}
         handleSaveNote={handleSaveNote}
         setShowSidebar={setShowSidebar}
+        handleDeleteNote={handleDeleteNote}
       />
       <EditorToolbar onEditorChange={toggleStyle} />
       <div className="px-5 mt-1">
