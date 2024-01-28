@@ -34,7 +34,9 @@ function CreateFolderDialog({ children }) {
 
   return (
     <Dialog className="w-full">
-      <DialogTrigger className="w-full p-5">{children}</DialogTrigger>
+      <DialogTrigger className="w-full p-5 flex gap-3 justify-center">
+        {children}
+      </DialogTrigger>
       <DialogContent>
         <form className="w-full" onSubmit={handleCreateFolder}>
           <DialogHeader className="space-y-5">

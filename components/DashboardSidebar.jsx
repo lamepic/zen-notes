@@ -25,10 +25,8 @@ function DashboardSidebar({ setOpenSidebar }) {
       </section>
       <section className="border-b dark:border-gray-500 text-lg ">
         <CreateFolderDialog>
-          <Button className="flex w-full gap-2 p-5">
-            <Plus size={25} />
-            Create Folder
-          </Button>
+          <Plus size={25} />
+          Create Folder
         </CreateFolderDialog>
       </section>
       <section className="overflow-y-auto flex-grow">
