@@ -11,10 +11,12 @@ function Login() {
     <div className="flex flex-col items-center h-full">
       <div
         className={cn(
-          "flex space-y-6 flex-col justify-center items-center mt-40 max-w-xl lg:w-3/12 rounded-md p-5 border-gray-500/40 h-1/6",
+          "flex space-y-6 flex-col justify-center items-center mt-40 max-w-xl lg:w-3/12 rounded-md p-5 border-gray-500/40",
           !authLoading && "border"
         )}
       >
+        <p className="text-xl md:text-2xl font-bold">Lets get started</p>
+        <hr className="border-gray-600/20 w-full" />
         {authLoading ? (
           <p className="text-4xl font-bold">Loading...</p>
         ) : (
