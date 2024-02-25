@@ -6,16 +6,13 @@ import { Plus, X } from "lucide-react";
 import ProfileIcon from "./ProfileIcon";
 import ThemeToggle from "./ThemeToggle";
 import CreateFolderDialog from "./CreateFolderDialog";
-import { Button } from "./ui/button";
 import { getFolders } from "@/lib/services";
 import useSWR from "swr";
 import { useAuth } from "@/lib/auth";
 
 function DashboardSidebar({ setOpenSidebar }) {
   const { user } = useAuth();
-  const { data, error, isLoading } = useSWR("getFolders", () =>
-    getFolders(user.id)
-  );
+  const { data, isLoading } = useSWR("getFolders", () => getFolders(user.id));
 
   return (
     <div className="h-full flex flex-col">

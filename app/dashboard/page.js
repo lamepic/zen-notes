@@ -1,25 +1,34 @@
 "use client";
 
-import React, { useState } from "react";
-import DashboardSidebar from "@/components/DashboardSidebar";
-import { cn } from "@/lib/utils";
-import NoteEditor from "@/components/NoteEditor";
+import Image from "next/image";
+
+import { useNotes } from "@/lib/NotesProvider";
+import { AlignJustify } from "lucide-react";
 
 function DashboardPage() {
-  const [showSidebar, setShowSidebar] = useState(false);
-
+  const { setShowSidebar } = useNotes();
   return (
-    <div className="h-full lg:border dark:border-gray-500 lg:w-10/12 lg:h-5/6 m-auto rounded-md lg:flex relative">
-      <div
-        className={cn(
-          "absolute lg:relative w-full h-full lg:-translate-x-0 top-0 left-0 border-r dark:border-gray-500 lg:flex-[0.23] z-20 transition-all duration-200 ease-in-out",
-          !showSidebar ? "-translate-x-full" : "bg-[var(--background)]" //
-        )}
-      >
-        <DashboardSidebar setOpenSidebar={setShowSidebar} />
-      </div>
-      <div className="lg:flex-[0.77]">
-        <NoteEditor setShowSidebar={setShowSidebar} />
+    <div className="h-full">
+      <p className="pl-5 pt-5">
+        <AlignJustify
+          onClick={() => setShowSidebar(true)}
+          className="lg:hidden"
+        />
+      </p>
+      <div className="h-5/6 w-full grid place-items-center text-3xl font-bold">
+        <div className="flex flex-col items-center gap-5">
+          <Image
+            src="notebook.svg"
+            height={300}
+            width={300}
+            draggable={false}
+            alt="add-note"
+            priority
+          />
+          <p className="text-sm text-gray-400">
+            Create a note and start writing
+          </p>
+        </div>
       </div>
     </div>
   );

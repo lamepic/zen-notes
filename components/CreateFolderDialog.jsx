@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import {
   Dialog,
   DialogClose,
@@ -11,24 +13,28 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { useAuth } from "@/lib/auth";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { createFolder } from "@/lib/services";
-import { useState } from "react";
 import { useSWRConfig } from "swr";
+import { Input } from "./ui/input";
+import { useAuth } from "@/lib/auth";
+import { Button } from "./ui/button";
+import { slugify } from "@/lib/utils";
+import { createFolder } from "@/lib/services";
 
 function CreateFolderDialog({ children }) {
   const { user } = useAuth();
-  const [folderName, setFolderName] = useState();
   const { mutate } = useSWRConfig();
+  const [folderName, setFolderName] = useState();
 
   const handleCreateFolder = async (e) => {
     e.preventDefault();
     if (folderName.length === 0) {
       return;
     }
-    const res = await createFolder({ name: folderName, userId: user.id });
+    await createFolder({
+      name: folderName,
+      userId: user.id,
+      slug: slugify(folderName),
+    });
     mutate("getFolders");
   };
 
@@ -37,7 +43,7 @@ function CreateFolderDialog({ children }) {
       <DialogTrigger className="w-full p-5 flex gap-3 justify-center">
         {children}
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="w-11/12 md:w-full rounded-lg">
         <form className="w-full" onSubmit={handleCreateFolder}>
           <DialogHeader className="space-y-5">
             <DialogTitle className="text-3xl text-center">
@@ -54,11 +60,9 @@ function CreateFolderDialog({ children }) {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <DialogClose>
-              <Button className="w-full font-bold" type="submit">
-                Save
-              </Button>
-            </DialogClose>
+            <Button className="w-full font-bold" type="submit" asChild>
+              <DialogClose>Save</DialogClose>
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

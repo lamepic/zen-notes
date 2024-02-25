@@ -80,3 +80,9 @@
     @apply flex flex-col items-center justify-center;
   }
 }
+
+/* .custom-editor .public-DraftEditor-content {
+  max-height: 100%;
+  overflow-y: scroll;
+  border: 1px solid red;
+} */

@@ -13,19 +13,23 @@ import { useState } from "react";
 import { Input } from "./ui/input";
 import { cn } from "@/lib/utils";
 import { deleteFolder, getNotes, updateFolder } from "@/lib/services";
-import useSWR, { useSWRConfig } from "swr";
+import { useSWRConfig } from "swr";
 import FileList from "./FileList";
+import { useRouter } from "next/navigation";
 import { useNotes } from "@/lib/NotesProvider";
 
 function SidebarFolder({ folder }) {
+  const router = useRouter();
+  const { mutate } = useSWRConfig();
   const [editMode, setEditMode] = useState(false);
   const [openFolder, setOpenFolder] = useState(false);
   const [folderName, setFolderName] = useState(folder.name);
-  const { mutate } = useSWRConfig();
-  const { setSelectedNote, setSelectedFolderId } = useNotes();
-  const { data, isLoading } = useSWR(folder ? `notes-${folder.id}` : null, () =>
-    getNotes(folder)
-  );
+  const { setShowSidebar } = useNotes();
+
+  const handleAddNote = () => {
+    setShowSidebar(false);
+    router.push(`/dashboard/${folder.id}/new-note`);
+  };
 
   const handleDelete = async () => {
     await deleteFolder(folder);
@@ -43,6 +47,10 @@ function SidebarFolder({ folder }) {
     setEditMode(false);
   };
 
+  const handleOpenFolder = async () => {
+    setOpenFolder(!openFolder);
+  };
+
   return (
     <>
       {!editMode ? (
@@ -50,9 +58,7 @@ function SidebarFolder({ folder }) {
           <div className="flex justify-between items-center px-3 py-1 cursor-pointer hover:bg-[#e5e5e5] dark:hover:bg-slate-900/70 duration-150 mb-1 transition-all">
             <button
               className="flex items-center gap-2 w-full py-2"
-              onClick={() => {
-                setOpenFolder(!openFolder);
-              }}
+              onClick={handleOpenFolder}
             >
               {!openFolder ? <Folder size={20} /> : <FolderClosed size={20} />}
               <p className="lg:text-sm">{folder.name}</p>
@@ -74,9 +80,7 @@ function SidebarFolder({ folder }) {
                 </IconButton>
               </FolderMenu>
               <ChevronRight
-                onClick={() => {
-                  setOpenFolder(!openFolder);
-                }}
+                onClick={handleOpenFolder}
                 className={cn(
                   "transition-all duration-100 ease-linear",
                   openFolder ? "-rotate-90" : ""
@@ -88,14 +92,11 @@ function SidebarFolder({ folder }) {
             <div className="-mt-1">
               <button
                 className="text-gray-500 text-left text-sm w-full pl-10"
-                onClick={() => {
-                  setSelectedNote(null);
-                  setSelectedFolderId(folder.id);
-                }}
+                onClick={handleAddNote}
               >
                 Add note...
               </button>
-              {!isLoading && <FileList notes={data} />}
+              <FileList folderId={folder.id} />
             </div>
           )}
         </div>
