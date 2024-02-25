@@ -5,6 +5,8 @@ import { Toaster } from '@/components/ui/toaster';
 import { NotesProvider } from '@/lib/NotesProvider';
 
 import DashboardLayout from '@/components/DashboardLayout';
+import { SWRConfig } from 'swr';
+import { swrOptions } from '@/lib/configs';
 
 function Layout({ children }) {
   const { loading, user } = useAuth();
@@ -16,10 +18,12 @@ function Layout({ children }) {
           <p className="text-3xl text-center">Loading...</p>
         </div>
       ) : (
-        <NotesProvider>
-          <DashboardLayout>{children}</DashboardLayout>
-          <Toaster />
-        </NotesProvider>
+        <SWRConfig value={swrOptions}>
+          <NotesProvider>
+            <DashboardLayout>{children}</DashboardLayout>
+            <Toaster />
+          </NotesProvider>
+        </SWRConfig>
       )}
     </div>
   );
