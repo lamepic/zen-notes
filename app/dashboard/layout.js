@@ -1,12 +1,7 @@
 'use client';
 
 import { useAuth } from '@/lib/auth';
-import { Toaster } from '@/components/ui/toaster';
-import { NotesProvider } from '@/lib/NotesProvider';
-
-import DashboardLayout from '@/components/DashboardLayout';
-import { SWRConfig } from 'swr';
-import { swrOptions } from '@/lib/configs';
+import Providers from '@/lib/providers';
 
 function Layout({ children }) {
   const { loading, user } = useAuth();
@@ -18,12 +13,7 @@ function Layout({ children }) {
           <p className="text-3xl text-center">Loading...</p>
         </div>
       ) : (
-        <SWRConfig value={swrOptions}>
-          <NotesProvider>
-            <DashboardLayout>{children}</DashboardLayout>
-            <Toaster />
-          </NotesProvider>
-        </SWRConfig>
+        <Providers>{children}</Providers>
       )}
     </div>
   );
