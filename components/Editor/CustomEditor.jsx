@@ -1,22 +1,15 @@
-"use client";
-import { useState } from "react";
-import {
-  ContentState,
-  Editor,
-  EditorBlock,
-  EditorState,
-  RichUtils,
-  convertFromRaw,
-} from "draft-js";
-import EditorToolbar from "../EditorToolbar";
+'use client';
+import { useState } from 'react';
+import { ContentState, Editor, EditorBlock, EditorState, RichUtils, convertFromRaw } from 'draft-js';
+import EditorToolbar from '../EditorToolbar';
 
 const emptyContentState = convertFromRaw({
   entityMap: {},
   blocks: [
     {
-      text: "",
-      key: "foo",
-      type: "unstyled",
+      text: '',
+      key: 'foo',
+      type: 'unstyled',
       entityRanges: [],
     },
   ],
@@ -48,9 +41,7 @@ function CustomEditor({ onEditorContentChange, noteContent }) {
           editorState={editorState}
           onChange={(editorState) => {
             setEditorState(editorState);
-            onEditorContentChange(
-              editorState.getCurrentContent().getPlainText()
-            );
+            onEditorContentChange(editorState.getCurrentContent().getPlainText());
           }}
           userSelect="none"
           contentEditable={true}
@@ -72,7 +63,7 @@ const Line = (props) => {
       <span className="mr-5 text-sm text-gray-500" contentEditable={false}>
         {lineNumber}
       </span>
-      <div style={{ flex: "1" }}>
+      <div style={{ flex: '1' }}>
         <EditorBlock {...props} />
       </div>
     </div>

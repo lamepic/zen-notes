@@ -1,18 +1,18 @@
-"use client";
-import React from "react";
-import Logo from "./Logo";
-import SidebarFolder from "./SidebarFolder";
-import { Plus, X } from "lucide-react";
-import ProfileIcon from "./ProfileIcon";
-import ThemeToggle from "./ThemeToggle";
-import CreateFolderDialog from "./CreateFolderDialog";
-import { getFolders } from "@/lib/services";
-import useSWR from "swr";
-import { useAuth } from "@/lib/auth";
+'use client';
+import React from 'react';
+import Logo from './Logo';
+import SidebarFolder from './SidebarFolder';
+import { Plus, X } from 'lucide-react';
+import ProfileIcon from './ProfileIcon';
+import ThemeToggle from './ThemeToggle';
+import CreateFolderDialog from './CreateFolderDialog';
+import { getFolders } from '@/lib/services';
+import useSWR from 'swr';
+import { useAuth } from '@/lib/auth';
 
 function DashboardSidebar({ setOpenSidebar }) {
   const { user } = useAuth();
-  const { data, isLoading } = useSWR("getFolders", () => getFolders(user.id));
+  const { data, isLoading } = useSWR('getFolders', () => getFolders(user.id));
 
   return (
     <div className="h-full flex flex-col">

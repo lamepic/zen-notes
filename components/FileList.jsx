@@ -1,7 +1,7 @@
-import useSWR from "swr";
-import SidebarFile from "./SidebarFile";
-import { getNotes } from "@/lib/services";
-import { Skeleton } from "./ui/skeleton";
+import useSWR from 'swr';
+import SidebarFile from './SidebarFile';
+import { getNotes } from '@/lib/services';
+import { Skeleton } from './ui/skeleton';
 
 function FileList({ folderId }) {
   const { data, isLoading } = useSWR(folderId, () => getNotes(folderId));

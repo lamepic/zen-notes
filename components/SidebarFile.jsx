@@ -1,5 +1,5 @@
-import { useNotes } from "@/lib/NotesProvider";
-import { useRouter } from "next/navigation";
+import { useNotes } from '@/lib/NotesProvider';
+import { useRouter } from 'next/navigation';
 
 function SidebarFile({ note }) {
   const router = useRouter();

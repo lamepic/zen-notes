@@ -1,25 +1,17 @@
-import {
-  AlignJustify,
-  AlignLeft,
-  AlignRight,
-  Bold,
-  Code,
-  Italic,
-  Underline,
-} from "lucide-react";
-import React from "react";
+import { AlignJustify, AlignLeft, AlignRight, Bold, Code, Italic, Underline } from 'lucide-react';
+import React from 'react';
 
 const tools = [
   {
-    type: "BOLD",
+    type: 'BOLD',
     icon: <Bold size={20} />,
   },
   {
-    type: "UNDERLINE",
+    type: 'UNDERLINE',
     icon: <Underline size={20} />,
   },
   {
-    type: "ITALIC",
+    type: 'ITALIC',
     icon: <Italic size={20} />,
   },
   //   {
@@ -53,6 +45,4 @@ function EditorToolbar({ onEditorChange }) {
 
 export default EditorToolbar;
 
-const ToolbarIcon = ({ children, ...props }) => (
-  <button {...props}>{children}</button>
-);
+const ToolbarIcon = ({ children, ...props }) => <button {...props}>{children}</button>;

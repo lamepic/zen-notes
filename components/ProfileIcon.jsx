@@ -1,9 +1,9 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { Button } from "./ui/button";
-import { useAuth } from "@/lib/auth";
-import { useRouter } from "next/navigation";
-import ProfileDialog from "./ProfileDialog";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { Button } from './ui/button';
+import { useAuth } from '@/lib/auth';
+import { useRouter } from 'next/navigation';
+import ProfileDialog from './ProfileDialog';
 
 function ProfileIcon() {
   const { signout, user } = useAuth();
@@ -17,8 +17,8 @@ function ProfileIcon() {
             <Avatar className="border shadow-sm h-10 w-10" size={5}>
               <AvatarImage src={user?.avatar} alt="user-profile" />
               <AvatarFallback>
-                {user?.name.split(" ")[0][0]}
-                {user?.name.split(" ")[1][0]}
+                {user?.name.split(' ')[0][0]}
+                {user?.name.split(' ')[1][0]}
               </AvatarFallback>
             </Avatar>
             <p>Profile</p>
@@ -35,7 +35,7 @@ function ProfileIcon() {
               variant="ghost"
               onClick={() => {
                 signout();
-                router.push("/");
+                router.push('/');
               }}
               className="text-left"
             >

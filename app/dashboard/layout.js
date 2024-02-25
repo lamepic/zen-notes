@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { useAuth } from "@/lib/auth";
-import { Toaster } from "@/components/ui/toaster";
-import { NotesProvider } from "@/lib/NotesProvider";
+import { useAuth } from '@/lib/auth';
+import { Toaster } from '@/components/ui/toaster';
+import { NotesProvider } from '@/lib/NotesProvider';
 
-import DashboardLayout from "@/components/DashboardLayout";
+import DashboardLayout from '@/components/DashboardLayout';
 
 function Layout({ children }) {
   const { loading, user } = useAuth();

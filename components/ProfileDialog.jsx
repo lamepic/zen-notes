@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Dialog,
   DialogContent,
@@ -6,9 +6,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { useAuth } from "@/lib/auth";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+} from '@/components/ui/dialog';
+import { useAuth } from '@/lib/auth';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 function ProfileDialog({ children }) {
   const { user } = useAuth();
@@ -23,8 +23,8 @@ function ProfileDialog({ children }) {
             <Avatar className="flex items-center justify-center">
               <AvatarImage src={user?.avatar} alt="profile-img" />
               <AvatarFallback className="border shadow-sm">
-                {user?.name.split(" ")[0][0]}
-                {user?.name.split(" ")[1][0]}
+                {user?.name.split(' ')[0][0]}
+                {user?.name.split(' ')[1][0]}
               </AvatarFallback>
             </Avatar>
             <p className="text-xl">{user?.name}</p>
