@@ -9,7 +9,7 @@ type PropType = {
 };
 
 function FolderContent({ show, folderId }: PropType) {
-    const { selectedNote, setSelectedNote } = useNote();
+    const { setSelectedNote } = useNote();
     const notes = useLiveQuery(() => getNotes(folderId));
 
     const addNote = async () => {
@@ -38,7 +38,9 @@ function FolderContent({ show, folderId }: PropType) {
             {notes?.map((note) => {
                 return (
                     <button
-                        onClick={() => setSelectedNote(note)}
+                        onClick={() => {
+                            setSelectedNote(note);
+                        }}
                         key={note.id}
                         className="hover:bg-slate-600/50 transition-all duration-300 pl-6 pr-1 py-1 ease text-sm cursor-pointer rounded w-full text-start"
                     >

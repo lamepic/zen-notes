@@ -14,7 +14,6 @@ function NoteEditor() {
     const ref = useRef<any>(null);
 
     const handleSave = debounce((content) => {
-        console.log(JSON.stringify(content));
         updateSelectedNote({ name: selectedNote.name, content });
     }, 1000);
 
